@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    container_name: sentinelvision-backend
+    ports:
+      - "8000:8000"
+    environment:
+      - SECRET_KEY=sentinelvision-production-secret-key-2026
+      - DATABASE_URL=sqlite:///./sentinelvision.db
+      - FIRE_MODEL_PATH=weights/best.pt
+      - YOLO_MODEL_PATH=yolov8n.pt
+    volumes:
+      - ./backend/static:/app/backend/static
+      - ./weights:/app/weights
+      - ./sentinelvision.db:/app/sentinelvision.db
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: sentinelvision-frontend
+    ports:
+      - "5173:80"
+    depends_on:
+      - backend
+    restart: unless-stopped

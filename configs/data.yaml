@@ -1,0 +1,21 @@
+# SentinelVision AI Multi-Threat Dataset Configuration
+path: ../dataset
+train: images/train
+val: images/val
+test: images/test
+
+# Number of threat classes
+nc: 10
+
+# Threat Class Names
+names:
+  0: person
+  1: car
+  2: smoke
+  3: fire
+  4: gun
+  5: knife
+  6: grenade
+  7: explosion
+  8: fight
+  9: fall
