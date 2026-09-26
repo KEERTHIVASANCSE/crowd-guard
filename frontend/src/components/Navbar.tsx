@@ -2,6 +2,7 @@ import React from 'react';
 import { Shield, Radio, Volume2, VolumeX, LogOut, User as UserIcon, Siren } from 'lucide-react';
 import { User } from '../types';
 import { soundEngine } from '../services/sound';
+import { api } from '../services/api';
 
 interface NavbarProps {
   user: User | null;
@@ -66,11 +67,11 @@ export const Navbar: React.FC<NavbarProps> = ({ user, onLogout, wsConnected, act
 
       {/* Center status indicators */}
       <div className="hidden md:flex items-center space-x-6">
-        {/* WS Stream Status */}
+        {/* WS Stream Status / Demo Mode */}
         <div className="flex items-center space-x-2 px-3 py-1 rounded-full bg-slate-900/60 border border-soc-border text-xs font-mono">
-          <Radio className={`w-3.5 h-3.5 ${wsConnected ? 'text-emerald-400 animate-pulse' : 'text-red-400'}`} />
-          <span className={wsConnected ? 'text-emerald-400' : 'text-red-400'}>
-            {wsConnected ? 'AI CORE ONLINE' : 'DISCONNECTED'}
+          <Radio className={`w-3.5 h-3.5 ${wsConnected ? 'text-emerald-400 animate-pulse' : api.isDemoMode() ? 'text-cyan-400 animate-pulse' : 'text-red-400'}`} />
+          <span className={wsConnected ? 'text-emerald-400' : api.isDemoMode() ? 'text-cyan-400' : 'text-red-400'}>
+            {wsConnected ? 'AI CORE ONLINE' : api.isDemoMode() ? 'INTERACTIVE DEMO MODE' : 'DISCONNECTED'}
           </span>
         </div>
 
